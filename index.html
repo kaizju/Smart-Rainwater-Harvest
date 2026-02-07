@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="style.css">
   <link rel='stylesheet'
     href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <title>EcoRain</title>
 </head>
 <div class="container-fluid">
@@ -21,9 +22,13 @@
     <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 text-white">
       <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100"
         style="margin-top: 1rem;">
-        <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-          <img src="./img/water.png" alt="Bootstrap" width="30" height="24">
-          <span class="fs-3 d-none d-sm-inline">EcoRain</span>
+        <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+          style="margin-top: 1rem;">
+          <div style="flex-direction: column;">
+            <img src="./img/water.png" alt="Bootstrap" width="30" height="24">
+            <span class="fs-3 d-none d-sm-inline">EcoRain</span>
+            <span style="margin-left: 2.6rem; font-size: 0.8rem; ">Rainwater Harvest</span>
+          </div>
         </a>
         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
           <li class="nav-item">
@@ -39,7 +44,7 @@
             <i class="fi fi-rr-chart-histogram"></i>
             <span class="ms-1 d-none d-sm-inline">Usage Stats</span>
           </a>
-           <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+          <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
             <i class="fs-2 bi-speedometer2"></i>
             <i class="fi fi-rr-cloud-sun"></i>
             <span class="ms-1 d-none d-sm-inline">Weather</span>
@@ -49,7 +54,7 @@
             <i class="fi fi-rr-settings"></i>
             <span class="ms-1 d-none d-sm-inline">Settings</span>
           </a>
-          
+
         </ul>
       </div>
     </div>
@@ -81,8 +86,8 @@
           <div class="card-body">
             <h5 class="card-title">WATER QUALITY </h5>
             <div style="flex-direction: row;">
-            <mark style="background-color: rgba(142, 142, 142, 0.907);">N/A</mark>
-            <p style="opacity: 0.5;">updated 0s ago</p>
+              <mark style="background-color: rgba(142, 142, 142, 0.907);">N/A</mark>
+              <p style="opacity: 0.5;">updated 0s ago</p>
             </div>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
               <div class="card" style="width: 12rem;">
@@ -93,8 +98,16 @@
                   <span style="color: green; font-weight: bold;">None</span>
                 </div>
               </div>
-             
+
             </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h6 class="mb-0">Weekly Sales Overview</h6>
+          </div>
+          <div class="card-body">
+            <canvas id="bar-chart" height="100"></canvas>
           </div>
         </div>
       </div>
@@ -105,5 +118,5 @@
 <body>
 
 </body>
-
+<script src="script.js"></script>
 </html>
