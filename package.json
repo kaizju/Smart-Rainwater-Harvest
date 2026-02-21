@@ -6,7 +6,6 @@
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
-    
   },
   "repository": {
     "type": "git",
@@ -20,7 +19,7 @@
     "url": "https://github.com/kaizju/Automated-Rainwater-Harvest/issues"
   },
   "homepage": "https://github.com/kaizju/Automated-Rainwater-Harvest#readme",
-  "dependencies": {
-    "electron": "^40.2.1"
+  "devDependencies": {
+    "electron": "^40.6.0"
   }
 }

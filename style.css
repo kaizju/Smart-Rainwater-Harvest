@@ -1,6 +1,10 @@
-.body {
-    color: rgb(21, 33, 33);
+body {
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
+
 
 .col-md-3 {
     background-color: #0F172A;
@@ -100,4 +104,23 @@
     padding: 8px 15px;
     border-radius: 20px;
     font-size: 0.85rem;
+}
+/* Small tablets: 480px+ */
+@media (min-width: 480px) {
+
+}
+
+/* Tablets: 768px+ */
+@media (min-width: 768px) {
+
+}
+
+/* Laptops: 1024px+ */
+@media (min-width: 1024px) {
+
+}
+
+/* Desktops: 1280px+ */
+@media (min-width: 1280px) {
+
 }
