@@ -11,7 +11,8 @@ values ('Tank 1','Jude Crib','3,542L','Active');
 insert into sensors (tank_id,sensor_type,model,unit,is_active) 
 values (1,'Water Level','Model 1',1,'Active');
 
-
+insert into sensors_readings (sensor_id,user_id,recorded_at,anomaly) 
+values (1,1,CURRENT_TIMESTAMP,'None');
 
 
 
