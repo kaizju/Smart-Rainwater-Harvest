@@ -9,5 +9,4 @@ values (1, 'Login');
 
 select * from user_activity_logs;
 
-
 commit;
