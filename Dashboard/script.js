@@ -148,5 +148,40 @@ async function init() {
     }
 }
 
+async function fetchTankData() {
+  try {
+    const res = await fetch('../../api/tank.php'); // adjust path to your api.php
+    const data = await res.json();
+    if (data.error) { console.error(data.error); return; }
+
+    const pct = data.percent_full;
+
+    // Big % number
+    document.querySelector('.card.wow .card-title').textContent = pct + '%';
+
+    // Capacity label
+    document.querySelector('.card.wow .card-1').textContent =
+      data.max_capacity.toLocaleString() + 'L';
+
+    // Progress bar
+    document.getElementById('file').value = pct;
+
+    // Collected today label
+    document.querySelector('.card.wow p:last-of-type').textContent =
+      data.current.toLocaleString() + 'L collected today';
+
+    // Color the progress bar by level
+    const prog = document.getElementById('file');
+    if (pct < 20) prog.style.accentColor = '#ef4444';
+    else if (pct < 50) prog.style.accentColor = '#f59e0b';
+    else prog.style.accentColor = '#3b82f6';
+
+  } catch (e) {
+    console.error('Tank fetch error:', e);
+  }
+}
+
+fetchTankData();
+setInterval(fetchTankData, 10000); // refresh every 10s
 // Run on page load
 init();
