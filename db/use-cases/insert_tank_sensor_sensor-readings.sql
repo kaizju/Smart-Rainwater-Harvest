@@ -15,4 +15,10 @@ VALUES (LAST_INSERT_ID(), 'Water Level', 'Model 1', '1', 'Active');
 INSERT INTO sensor_readings (sensor_id, user_id, anomaly)
 VALUES (LAST_INSERT_ID(), 1, 'None');
 
+INSERT INTO water_usage (tank_id, user_id, usage_liters, usage_type)
+VALUES (1, 1, 200.00, 'Cleaning');
+
+INSERT INTO water_quality (tank_id, user_id, turbidity, ph_level, quality_status)
+VALUES (1, 1, 2.50, 7.20, 'Good');
+
 COMMIT;
