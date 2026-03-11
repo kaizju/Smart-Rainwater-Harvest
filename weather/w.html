@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>EcoRain – Weather Monitor</title>
+  <link rel='stylesheet'
+    href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="w.css">
@@ -11,43 +13,41 @@
 <body>
 
 <!-- ── SIDEBAR ── -->
-<aside class="sidebar">
+<div class="col-md-3">
   <div class="sidebar-logo">
     <div class="logo-icon">💧</div>
     <span>EcoRain</span>
   </div>
 
-  <a href="#" class="nav-item active">
-    <span class="icon">📊</span>
+  <a href="#" class="nav1">
+   <i class="fi fi-rr-analytics"></i>
     <span>Dashboard</span>
   </a>
-  <a href="#" class="nav-item">
-    <span class="icon">📈</span>
+  <a href="#" class="nav1">
+     <i class="fi fi-rr-chart-histogram"></i>
     <span>Usage Stats</span>
   </a>
-  <a href="#" class="nav-item active" style="background:#1e3a8a;">
-    <span class="icon">🌤️</span>
+  <a href="#" class="nav1 active">
+    <i class="fi fi-rr-cloud-sun"></i>
     <span>Weather</span>
   </a>
-  <a href="#" class="nav-item">
-    <span class="icon">⚙️</span>
+  <a href="#" class="nav1">
+   <i class="fi fi-rr-settings"></i>
     <span>Settings</span>
   </a>
 
   <div class="sidebar-bottom">
     <div class="sidebar-user">
-      <div class="avatar">SC</div>
       <div class="user-info">
-        <div style="color:#e2e8f0;font-size:13px;font-weight:600;">ScubaDiver</div>
-        <div style="font-size:11px;">Pro Plan</div>
+
       </div>
     </div>
-    <a href="#" class="nav-item" style="margin-top:4px;">
-      <span class="icon">🚪</span>
+    <a href="#" class="nav1" style="margin-top:4px;">
+      <span class="nav-icon">🚪</span>
       <span>Log out</span>
     </a>
   </div>
-</aside>
+</div>
 
 <!-- ── MAIN ── -->
 <main class="main">

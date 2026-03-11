@@ -18,23 +18,26 @@
     }
 
     body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg-main);
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
       display: flex;
       min-height: 100vh;
       color: var(--text-dark);
     }
 
     /* ── SIDEBAR ── */
-    .sidebar {
+    .col-md-3 {
+      background-color: #0F172A;
       width: 220px;
       min-width: 220px;
-      background: var(--sidebar-bg);
       display: flex;
       flex-direction: column;
       padding: 24px 16px;
       gap: 8px;
     }
+
     .sidebar-logo {
       display: flex;
       align-items: center;
@@ -52,23 +55,39 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 18px;
     }
-    .nav-item {
+
+    .nav1 {
+      padding: 12px 28px;
+      background-color: #0F172A;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 11px 14px;
-      border-radius: 10px;
-      color: #94a3b8;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
+      gap: 10px;
       text-decoration: none;
-      transition: background 0.2s, color 0.2s;
+      width: 100%;
     }
-    .nav-item .icon { font-size: 18px; width: 20px; text-align: center; }
-    .nav-item:hover { background: rgba(255,255,255,0.07); color: #fff; }
-    .nav-item.active { background: #1e3a5f; color: #fff; }
-    .nav-item.active .icon { color: var(--blue-light); }
+    .nav1:hover {
+      background-color: #1e3a5f;
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(15,23,42,0.5);
+    }
+    .nav1:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+    .nav1.active {
+      background-color: #1e3a8a;
+      color: #fff;
+    }
+    .nav1 .nav-icon { font-size: 17px; width: 20px; text-align: center; flex-shrink: 0; }
+
     .sidebar-bottom { margin-top: auto; }
     .sidebar-user {
       display: flex; align-items: center; gap: 10px;
@@ -294,7 +313,9 @@
 
     /* Responsive tweaks */
     @media (max-width: 860px) {
-      .sidebar { width: 64px; min-width: 64px; }
-      .sidebar-logo span, .nav-item span, .sidebar-user .user-info { display: none; }
+      .col-md-3 { width: 64px; min-width: 64px; padding: 16px 8px; }
+      .sidebar-logo span, .nav1 span, .sidebar-user .user-info { display: none; }
+      .nav1 { padding: 12px; justify-content: center; }
       .bottom-grid { grid-template-columns: 1fr; }
     }
+ 
