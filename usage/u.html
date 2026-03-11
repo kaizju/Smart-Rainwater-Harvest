@@ -1,66 +1,441 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
-    <link rel="stylesheet" href="settings.css">
-    <link rel='stylesheet'
-        href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <title>EcoRain</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoRain – Usage Statistics</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ══ YOUR ORIGINAL CSS ══════════════════════════════════ */
+    body {
+      background-color: #f0f0f0;
+      font-family: 'DM Sans', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .col-md-3 {
+      background-color: #0F172A;
+    }
+
+    .nav1 {
+      padding: 12px 28px;
+      background-color: #0F172A;
+      color: white !important;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      width: 100%;
+    }
+
+    .nav1:hover {
+      background-color: #1e2d4a;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(15,23,42,0.5);
+      color: white !important;
+    }
+
+    .nav1:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    .nav1.active-link {
+      background-color: rgba(79,142,247,0.25) !important;
+      color: #93bbfd !important;
+    }
+
+    .nav1 .fi { font-size: 1.15rem; }
+
+    .wow { background-color: #96b3f8; color: aliceblue; }
+    .chart { margin-top:1rem; margin-right:3rem; margin-left:1rem; width:30rem; }
+    .card-1 { margin-top:6rem; }
+    .prog { width:20rem; }
+    .chart1 { width:40rem; margin-top:1rem; }
+
+    .location-title { color:#000; font-weight:bold; margin-bottom:10px; font-size:1rem; }
+    .error { color:#dc3545; text-align:center; padding:20px; }
+
+    .rainfall-title {
+      color:#6c757d; font-size:.85rem; font-weight:600;
+      letter-spacing:1px; margin-bottom:20px; text-transform:uppercase;
+    }
+
+    .forecast-item {
+      display:flex; align-items:center; padding:15px 0;
+      border-bottom:1px solid #f0f0f0; flex-direction:row;
+    }
+    .forecast-item:last-child { border-bottom:none; }
+    .forecast-icon { font-size:2rem; width:50px; text-align:center; }
+    .forecast-details { flex:1; margin-left:15px; }
+    .forecast-day { color:#333; font-size:1.1rem; font-weight:600; margin-bottom:3px; }
+    .forecast-chance { color:#9ca3af; font-size:.9rem; }
+    .forecast-amount { text-align:right; min-width:100px; }
+    .forecast-amount-value { color:#333; font-size:1.2rem; font-weight:700; }
+    .forecast-amount-label { color:#9ca3af; font-size:.85rem; }
+
+    .badge-custom {
+      background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      padding:8px 15px; border-radius:20px; font-size:.85rem;
+    }
+
+    /* ══ ADDITIONAL PAGE STYLES ════════════════════════════ */
+    :root {
+      --accent:  #4f8ef7;
+      --accent2: #38d9a9;
+      --mono:    'DM Mono', monospace;
+    }
+
+    /* keep sidebar full height & sticky */
+    .sidebar-inner {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    /* logo */
+    .eco-logo {
+      display: flex; align-items: center; gap: .65rem;
+      text-decoration: none; color: #fff;
+    }
+    .eco-logo-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, #4f8ef7, #38d9a9);
+      display: grid; place-items: center; font-size: 1.1rem; flex-shrink: 0;
+    }
+    .eco-logo span { font-size: 1.4rem; font-weight: 700; letter-spacing: -.02em; }
+
+    /* topbar */
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 2rem;
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .page-title { font-size: 1.35rem; font-weight: 700; color: #111827; letter-spacing: -.02em; }
+    .page-sub   { font-size: .75rem; color: #9ca3af; margin-top: 2px; }
+    .topbar-right { display: flex; align-items: center; gap: .8rem; }
+
+    .search-box {
+      display: flex; align-items: center; gap: .5rem;
+      background: #f3f4f6; border: 1px solid #e5e7eb;
+      border-radius: 10px; padding: .42rem .9rem;
+    }
+    .search-box input {
+      background: none; border: none; outline: none;
+      color: #111; font-size: .8rem; width: 140px; font-family: 'DM Sans', sans-serif;
+    }
+    .search-box input::placeholder { color: #9ca3af; }
+
+    .icon-btn {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: #f3f4f6; border: 1px solid #e5e7eb;
+      display: grid; place-items: center; cursor: pointer; position: relative;
+    }
+    .icon-btn .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #ef4444; border: 2px solid #fff;
+      position: absolute; top: 5px; right: 5px;
+    }
+    .avatar {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg,#4f8ef7,#38d9a9);
+      display: grid; place-items: center;
+      font-weight: 700; font-size: .8rem; color: #fff;
+    }
+
+    /* stat grid */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      padding: 1.4rem 2rem 0;
+    }
+
+    .stat-card {
+      background: #fff; border: 1px solid #e5e7eb;
+      border-radius: 14px; padding: 1.1rem 1.3rem;
+      position: relative; overflow: hidden;
+      transition: transform .2s, box-shadow .2s;
+      animation: fadeUp .35s ease both;
+    }
+    .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+    .stat-card:nth-child(1){animation-delay:.05s}
+    .stat-card:nth-child(2){animation-delay:.10s}
+    .stat-card:nth-child(3){animation-delay:.15s}
+    .stat-card:nth-child(4){animation-delay:.20s}
+
+    .stat-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:.55rem; }
+    .stat-label { font-size:.68rem; font-weight:600; color:#9ca3af; text-transform:uppercase; letter-spacing:.06em; }
+    .stat-icon  { width:32px; height:32px; border-radius:9px; display:grid; place-items:center; }
+    .stat-value { font-size:1.85rem; font-weight:700; color:#111827; letter-spacing:-.04em; line-height:1; margin-bottom:.45rem; }
+    .stat-value .unit { font-size:1rem; font-weight:500; color:#9ca3af; }
+    .stat-foot  { display:flex; align-items:center; gap:.4rem; font-size:.72rem; color:#9ca3af; }
+    .badge-up   { color:#10b981; font-weight:700; }
+    .badge-dn   { color:#ef4444; font-weight:700; }
+    .stat-glow  {
+      position:absolute; width:70px; height:70px;
+      border-radius:50%; filter:blur(36px); opacity:.14;
+      bottom:-15px; right:-10px; pointer-events:none;
+    }
+
+    /* charts area */
+    .charts-wrap { padding: 1.4rem 2rem; display:flex; flex-direction:column; gap:1.3rem; }
+
+    .chart-card {
+      background:#fff; border:1px solid #e5e7eb; border-radius:14px; overflow:hidden;
+      animation: fadeUp .35s ease .22s both;
+    }
+    .chart-header {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:.95rem 1.4rem; border-bottom:1px solid #f3f4f6;
+    }
+    .chart-title { font-size:.88rem; font-weight:600; color:#111827; }
+    .chart-sub   { font-size:.7rem; color:#9ca3af; margin-top:2px; }
+    .chart-pill  {
+      font-size:.68rem; font-weight:600; padding:.28rem .7rem;
+      border-radius:20px; background:#eff6ff; color:#4f8ef7;
+      border:1px solid #dbeafe;
+    }
+    .chart-body  { padding:1.1rem 1.4rem; }
+
+    .bottom-row { display:grid; grid-template-columns:1fr 1fr; gap:1.3rem; }
+
+    /* legend */
+    .legend { display:flex; gap:1rem; margin-bottom:.8rem; }
+    .legend-dot  { width:10px; height:10px; border-radius:50%; }
+    .legend-item { display:flex; align-items:center; gap:.35rem; font-size:.72rem; color:#6b7280; }
+
+    
+    /* main scroll col */
+    .main-scroll { overflow-y:auto; max-height:100vh; }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(14px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    ::-webkit-scrollbar { width:4px; }
+    ::-webkit-scrollbar-thumb { background:#e5e7eb; border-radius:3px; }
+
+    @media (max-width:991px) {
+      .stat-grid   { grid-template-columns:repeat(2,1fr); }
+      .bottom-row  { grid-template-columns:1fr; }
+    }
+    @media (max-width:575px) {
+      .stat-grid  { grid-template-columns:1fr; }
+      .topbar     { flex-direction:column; align-items:flex-start; gap:.6rem; }
+      .charts-wrap{ padding:1rem; }
+    }
+  </style>
 </head>
-<div class="container-fluid">
-    <div class="row flex-nowrap">
-        <!-- Sidebar -->
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 text-white">
-            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100"
-                style="margin-top: 1rem;">
-                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-                    style="margin-top: 1rem;">
-                    <div style="flex-direction: column;">
-                        <img src="../img/water.png" alt="Bootstrap" width="30" height="24">
-                        <span class="fs-3 d-none d-sm-inline">EcoRain</span>
+<body>
 
-                    </div>
-                </a>
-                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                    <li class="nav-item">
-                        <a href="#" class=" nav1 nav-link align-middle px-0">
+<div class="container-fluid p-0">
+  <div class="row flex-nowrap">
 
-                            <i class="fs-2 bi-house"></i>
-                            <i class="fi fi-rr-analytics"></i>
-                            <span class="ms-1 d-none d-sm-inline">Dashboard</span>
-                        </a>
-                    </li>
-                    <a href="#submenu1" data-bs-toggle="collapse" class=" nav1 nav-link px-0 align-middle">
-                        <i class="fs-2 bi-speedometer2"></i>
-                        <i class="fi fi-rr-chart-histogram"></i>
-                        <span class="ms-1 d-none d-sm-inline">Usage Stats</span>
-                    </a>
-                    <a href="#submenu1" data-bs-toggle="collapse" class="nav1 nav-link px-0 align-middle">
-                        <i class="fs-2 bi-speedometer2"></i>
-                        <i class="fi fi-rr-cloud-sun"></i>
-                        <span class="ms-1 d-none d-sm-inline">Weather</span>
-                    </a>
-                    <a href="#submenu1" data-bs-toggle="collapse" class="nav1 nav-link px-0 align-middle">
-                        <i class="fs-2 bi-speedometer2"></i>
-                        <i class="fi fi-rr-settings"></i>
-                        <span class="ms-1 d-none d-sm-inline">Settings</span>
-                    </a>
+    <!-- ══ SIDEBAR — your original HTML ══ -->
+    <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 text-white">
+      <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 sidebar-inner"
+        style="margin-top:1rem;">
 
-                </ul>
+        <!-- Logo -->
+        <a href="/" class="eco-logo pb-3 mb-md-0 me-md-auto" style="margin-top:1rem;">
+          <div class="eco-logo-icon">💧</div>
+          <span class="d-none d-sm-inline">EcoRain</span>
+        </a>
+
+        <!-- Nav -->
+        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100" id="menu">
+          <li class="nav-item w-100">
+            <a href="#" class="nav1 nav-link align-middle px-0">
+              <i class="fi fi-rr-analytics"></i>
+              <span class="ms-1 d-none d-sm-inline">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item w-100">
+            <a href="#" class="nav1 active-link nav-link px-0 align-middle">
+              <i class="fi fi-rr-chart-histogram"></i>
+              <span class="ms-1 d-none d-sm-inline">Usage Stats</span>
+            </a>
+          </li>
+          <li class="nav-item w-100">
+            <a href="#" class="nav1 nav-link px-0 align-middle">
+              <i class="fi fi-rr-cloud-sun"></i>
+              <span class="ms-1 d-none d-sm-inline">Weather</span>
+            </a>
+          </li>
+          <li class="nav-item w-100">
+            <a href="#" class="nav1 nav-link px-0 align-middle">
+              <i class="fi fi-rr-settings"></i>
+              <span class="ms-1 d-none d-sm-inline">Settings</span>
+            </a>
+          </li>
+        </ul>
+
+        <!-- Logout at bottom -->
+        <a href="#" class="nav1 nav-link px-0 align-middle mt-auto mb-3" style="opacity:.55;">
+          <i class="fi fi-rr-sign-out-alt"></i>
+          <span class="ms-1 d-none d-sm-inline">Log Out</span>
+        </a>
+
+      </div>
+    </div>
+    <!-- ══ END SIDEBAR ══ -->
+
+    <!-- ══ MAIN CONTENT ══ -->
+    <div class="col p-0 main-scroll">
+
+      <!-- Topbar -->
+      <div class="topbar">
+        <div>
+          <div class="page-title">Usage Statistics</div>
+          <div class="page-sub">Track your water conservation impact</div>
+        </div>
+        <div class="topbar-right">
+          <div class="search-box">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" placeholder="Search…">
+          </div>
+          <div class="icon-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span class="dot"></span>
+          </div>
+          <div class="avatar">JD</div>
+        </div>
+      </div>
+
+      <!-- Stat Cards -->
+      <div class="stat-grid">
+
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-label">Total Collected</div>
+            <div class="stat-icon" style="background:#eff6ff;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4f8ef7" stroke-width="2">
+                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+              </svg>
             </div>
+          </div>
+          <div class="stat-value">4,840<span class="unit">L</span></div>
+          <div class="stat-foot"><span class="badge-up">↑ 12%</span><span>vs last month</span></div>
+          <div class="stat-glow" style="background:#4f8ef7;"></div>
         </div>
 
-        <body>
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-label">Total Tap Used</div>
+            <div class="stat-icon" style="background:#fef2f2;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-value">2,150<span class="unit">L</span></div>
+          <div class="stat-foot"><span class="badge-dn">↑ 8%</span><span>vs last month</span></div>
+          <div class="stat-glow" style="background:#ef4444;"></div>
+        </div>
 
-        </body>
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-label">Net Savings</div>
+            <div class="stat-icon" style="background:#ecfdf5;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-value">2,690<span class="unit">L</span></div>
+          <div class="stat-foot">
+            <span>Equivalent to</span>
+            <span style="color:#10b981;font-weight:700;">$47 saved</span>
+          </div>
+          <div class="stat-glow" style="background:#10b981;"></div>
+        </div>
 
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-label">Avg Daily Collection</div>
+            <div class="stat-icon" style="background:#eff6ff;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4f8ef7" stroke-width="2">
+                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-value">161<span class="unit">L</span></div>
+          <div class="stat-foot"><span>Consistent performance</span></div>
+          <div class="stat-glow" style="background:#4f8ef7;"></div>
+        </div>
+
+      </div><!-- /stat-grid -->
+
+      <!-- Charts -->
+      <div class="charts-wrap">
+
+        <!-- 30-day trend -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <div class="chart-title">Daily Collection Trend</div>
+              <div class="chart-sub">Last 30 Days</div>
+            </div>
+            <span class="chart-pill">Last 30 Days</span>
+          </div>
+          <div class="chart-body">
+            <canvas id="trendChart" height="80"></canvas>
+          </div>
+        </div>
+
+        <!-- Bottom two-col -->
+        <div class="bottom-row">
+
+          <!-- Monthly comparison bar -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <div>
+                <div class="chart-title">Monthly Comparison</div>
+                <div class="chart-sub">6 Months</div>
+              </div>
+            </div>
+            <div class="chart-body">
+              <div class="legend">
+                <div class="legend-item"><div class="legend-dot" style="background:#4f8ef7;"></div>Rainwater</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#d1d5db;"></div>Tap Water</div>
+              </div>
+              <canvas id="barChart" height="160"></canvas>
+            </div>
+          </div>
+
+          
+        </div><!-- /bottom-row -->
+      </div><!-- /charts-wrap -->
+
+    </div><!-- /main col -->
+  </div><!-- /row -->
+</div><!-- /container-fluid -->
+
+<script src="u.js"></script>
+</body>
 </html>
